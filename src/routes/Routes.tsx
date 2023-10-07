@@ -1,14 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native'
 
-import { AuthStack } from './AuthStack';
+import { AuthStack } from './AuthStack'
 
-export function Router() {
-
+export function Routes() {
   return (
     <NavigationContainer>
-        <AuthStack />
+      <AuthStack />
     </NavigationContainer>
-  );
+  )
 }
