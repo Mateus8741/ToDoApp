@@ -1,0 +1,7 @@
+{
+  "extends": [
+    "@rocketseat/eslint-config/react",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
+  ],
+  "plugins": ["import", "@tanstack/query"]
+}

@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { HomeScreen } from '@screens';
+import { HomeScreen } from '@screens'
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
-};
+  HomeScreen: undefined
+}
 
 export function AppStack() {
-  const { Navigator, Screen } = createNativeStackNavigator<AppStackParamList>();
+  const { Navigator, Screen } = createNativeStackNavigator<AppStackParamList>()
 
   return (
     <Navigator
@@ -20,5 +20,5 @@ export function AppStack() {
       }}>
       <Screen name="HomeScreen" component={HomeScreen} />
     </Navigator>
-  );
+  )
 }
