@@ -2,12 +2,13 @@ import React from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 
-import { AuthStack } from './AuthStack'
+import { AppStack } from './AppStack'
 
 export function Routes() {
   return (
     <NavigationContainer>
-      <AuthStack />
+      {/* <AuthStack /> */}
+      <AppStack />
     </NavigationContainer>
   )
 }
