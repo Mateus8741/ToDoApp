@@ -1,4 +1,5 @@
 import { CustomButton, FormTextInput, OrSeparator } from '@components'
+import { useAuthSignUp } from '@domain'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useResetNavigationSuccess } from '@hooks'
 import { AuthScreenProps } from '@routes'
@@ -8,7 +9,17 @@ import { Pressable, Text, View } from 'react-native'
 import { SignUpSchema, signUpSchema } from './signUpScheema'
 
 export function SignUpScreen({ navigation }: AuthScreenProps<'SignUpScreen'>) {
+  const [user, setUser] = React.useState('' as string)
+
   const { reset } = useResetNavigationSuccess()
+
+  const { isLoading, signUp } = useAuthSignUp({
+    onSuccess: () => {
+      reset({
+        user,
+      })
+    },
+  })
 
   const { control, handleSubmit } = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -23,10 +34,8 @@ export function SignUpScreen({ navigation }: AuthScreenProps<'SignUpScreen'>) {
   })
 
   function createAccount(data: SignUpSchema) {
-    navigation.navigate('SuccessScreen', { user: data.name })
-    reset({
-      user: data.name,
-    })
+    signUp(data)
+    setUser(data.name)
   }
 
   function goToRegisterOccount() {
@@ -62,7 +71,11 @@ export function SignUpScreen({ navigation }: AuthScreenProps<'SignUpScreen'>) {
 
       <View className="pt-12" />
 
-      <CustomButton title="Entrar" onPress={handleSubmit(createAccount)} />
+      <CustomButton
+        title="Entrar"
+        isLoading={isLoading}
+        onPress={handleSubmit(createAccount)}
+      />
 
       <OrSeparator />
 

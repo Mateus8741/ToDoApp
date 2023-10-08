@@ -1,14 +1,21 @@
 import { CustomButton, FormTextInput, Logo, OrSeparator } from '@components'
+import { useAuthSignIn } from '@domain'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { AuthScreenProps } from '@routes'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Pressable, Text, View } from 'react-native'
+import { LoginSchema, loginSchema } from './loginScheema'
 
 export function LoginScreen({ navigation }: AuthScreenProps<'LoginScreen'>) {
-  const { control } = useForm()
+  const { signIn, isLoading } = useAuthSignIn()
 
-  function handleSubmit() {
-    console.log('submit')
+  const { control, handleSubmit } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+  })
+
+  function handleLogin(data: LoginSchema) {
+    signIn(data)
   }
 
   function goToRegisterOccount() {
@@ -44,7 +51,11 @@ export function LoginScreen({ navigation }: AuthScreenProps<'LoginScreen'>) {
 
       <View className="pt-12" />
 
-      <CustomButton title="Entrar" onPress={handleSubmit} />
+      <CustomButton
+        title="Entrar"
+        isLoading={isLoading}
+        onPress={handleSubmit(handleLogin)}
+      />
 
       <OrSeparator />
 

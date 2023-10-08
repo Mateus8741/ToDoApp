@@ -17,6 +17,7 @@
       "@theme": ["src/theme"],
       "@domain": ["src/domain"],
       "@brand": ["src/brand"],
+      "@libs": ["src/libs"],
       "@api": ["src/api"],
       "@types": ["src/types"],
       "@infra": ["src/infra"],
