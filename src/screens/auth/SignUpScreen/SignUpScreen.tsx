@@ -1,14 +1,32 @@
 import { CustomButton, FormTextInput, OrSeparator } from '@components'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useResetNavigationSuccess } from '@hooks'
 import { AuthScreenProps } from '@routes'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Pressable, Text, View } from 'react-native'
+import { SignUpSchema, signUpSchema } from './signUpScheema'
 
 export function SignUpScreen({ navigation }: AuthScreenProps<'SignUpScreen'>) {
-  const { control } = useForm()
+  const { reset } = useResetNavigationSuccess()
 
-  function handleSubmit() {
-    navigation.navigate('SuccessScreen', { user: 'John Doe' })
+  const { control, handleSubmit } = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
+
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+
+    mode: 'onChange',
+  })
+
+  function createAccount(data: SignUpSchema) {
+    navigation.navigate('SuccessScreen', { user: data.name })
+    reset({
+      user: data.name,
+    })
   }
 
   function goToRegisterOccount() {
@@ -17,8 +35,6 @@ export function SignUpScreen({ navigation }: AuthScreenProps<'SignUpScreen'>) {
 
   return (
     <View className="flex-1 justify-center items-center bg-white px-5">
-      {/* <Logo /> */}
-
       <Text className="text-5xl font-bold text-center">Cadastro</Text>
 
       <View className="pt-12" />
@@ -46,7 +62,7 @@ export function SignUpScreen({ navigation }: AuthScreenProps<'SignUpScreen'>) {
 
       <View className="pt-12" />
 
-      <CustomButton title="Entrar" onPress={handleSubmit} />
+      <CustomButton title="Entrar" onPress={handleSubmit(createAccount)} />
 
       <OrSeparator />
 

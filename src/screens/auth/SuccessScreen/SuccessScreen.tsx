@@ -24,8 +24,8 @@ export function SuccessScreen({
       <SVG width={200} height={200} />
 
       <Text className="mt-5 mb-5">
-        Olá, <Text className="text-green-500 font-bold">{user} </Text>
-        bem-vindo ao <Text className="text-green-500 font-bold">App</Text>
+        Olá, <Text className="text-green-500 font-bold uppercase">{user} </Text>
+        bem-vindo ao <Text className="text-green-500 font-bold">ToDoList</Text>
       </Text>
 
       <CustomButton
