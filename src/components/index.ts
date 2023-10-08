@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 export * from './CustomButton/CustomButton'
+export * from './Form/FormCustomCheckBox'
 export * from './Form/FormPasswordInput'
 export * from './Form/FormTextInput'
 export * from './Logo/Logo'

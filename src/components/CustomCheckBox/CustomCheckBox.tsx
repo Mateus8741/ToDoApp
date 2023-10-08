@@ -7,10 +7,9 @@ export function CustomCheckBox({ ...rest }: CustomCheckBoxProps) {
   return (
     <BouncyCheckbox
       size={20}
-      fillColor="#cdfed5"
+      fillColor="#69f881"
       innerIconStyle={{
-        borderRadius: 6,
-        backgroundColor: '#cdfed5',
+        backgroundColor: '#69f881',
       }}
       iconImageStyle={{ tintColor: '#0a9f23' }}
       textContainerStyle={{
