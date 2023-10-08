@@ -1,21 +1,17 @@
-/* eslint-disable prettier/prettier */
-import React from 'react';
+import React from 'react'
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import {
-  LoginScreen,
-  SignUpScreen,
-} from '@screens';
+import { LoginScreen, SignUpScreen, SuccessScreen } from '@screens'
 
 export type AuthStackParamList = {
-    LoginScreen: undefined;
-    SignUpScreen: undefined;
-  };
+  LoginScreen: undefined
+  SignUpScreen: undefined
+  SuccessScreen: { user: string }
+}
 
 export function AuthStack() {
-  const { Navigator, Screen } =
-    createNativeStackNavigator<AuthStackParamList>();
+  const { Navigator, Screen } = createNativeStackNavigator<AuthStackParamList>()
 
   return (
     <Navigator
@@ -26,6 +22,7 @@ export function AuthStack() {
       }}>
       <Screen name="LoginScreen" component={LoginScreen} />
       <Screen name="SignUpScreen" component={SignUpScreen} />
+      <Screen name="SuccessScreen" component={SuccessScreen} />
     </Navigator>
-  );
+  )
 }

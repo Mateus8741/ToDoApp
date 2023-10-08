@@ -8,7 +8,7 @@ export function SignUpScreen({ navigation }: AuthScreenProps<'SignUpScreen'>) {
   const { control } = useForm()
 
   function handleSubmit() {
-    console.log('submit')
+    navigation.navigate('SuccessScreen', { user: 'John Doe' })
   }
 
   function goToRegisterOccount() {
