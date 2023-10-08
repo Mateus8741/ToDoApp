@@ -1,9 +1,10 @@
 import { CustomButton, FormTextInput, Logo, OrSeparator } from '@components'
+import { AuthScreenProps } from '@routes'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Pressable, Text, View } from 'react-native'
 
-export function LoginScreen() {
+export function LoginScreen({ navigation }: AuthScreenProps<'LoginScreen'>) {
   const { control } = useForm()
 
   function handleSubmit() {
@@ -11,7 +12,7 @@ export function LoginScreen() {
   }
 
   function goToRegisterOccount() {
-    console.log('register')
+    navigation.navigate('SignUpScreen')
   }
 
   return (

@@ -1,7 +1,8 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+/* eslint-disable @typescript-eslint/no-namespace */
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-import { AppStackParamList } from './AppStack';
-import { AuthStackParamList } from './AuthStack';
+import { AppStackParamList } from './AppStack'
+import { AuthStackParamList } from './AuthStack'
 
 declare global {
   namespace ReactNavigation {
@@ -10,8 +11,7 @@ declare global {
 }
 
 export type AppScreenProps<RouteName extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, RouteName>;
+  NativeStackScreenProps<AppStackParamList, RouteName>
 
 export type AuthScreenProps<RouteName extends keyof AuthStackParamList> =
-  NativeStackScreenProps<AuthStackParamList, RouteName>;
-
+  NativeStackScreenProps<AuthStackParamList, RouteName>
