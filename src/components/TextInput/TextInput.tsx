@@ -31,7 +31,7 @@ export function TextInput({
         {label && <Text className="text-text-700 mb-2">{label}</Text>}
         <View
           className={`flex-row bg-text-100 border-[1px] rounded-md items-center ${
-            errorMessage ? 'border-error-600' : 'border-[#d2d2d2bd]'
+            errorMessage ? 'border-red-500' : 'border-[#d2d2d2bd]'
           }`}>
           <RNTextInput
             className="w-full py-2 px-3 text-text-500 placeholder-text-400"
@@ -45,7 +45,7 @@ export function TextInput({
           )}
         </View>
         {errorMessage && (
-          <Text className="text-error-600 text-xs font-semiBold mt-1">
+          <Text className="text-red-500 text-xs font-semiBold mt-1">
             {errorMessage}
           </Text>
         )}

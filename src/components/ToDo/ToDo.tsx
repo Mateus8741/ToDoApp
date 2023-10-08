@@ -3,20 +3,37 @@ import { useForm } from 'react-hook-form'
 import { Text, View } from 'react-native'
 import { FormCustomCheckBox } from '../Form/FormCustomCheckBox'
 
-export function ToDo() {
-  const { control } = useForm()
-  return (
-    <View className="w-full">
-      <Text className="font-bold text-2xl mb-4">USER ToDo List</Text>
+interface ToDoProps {
+  todoName: string
+  status: boolean
+}
 
-      <View className="flex-row border-t-2 border-gray-200">
+export function ToDo({ status = false, todoName }: ToDoProps) {
+  const [completed, setCompleted] = React.useState(false)
+
+  const { control } = useForm()
+
+  const statusCompleted = status || completed ? 'line-through' : 'none'
+
+  function isCompleted() {
+    setCompleted(!completed)
+  }
+
+  return (
+    <View className="w-ful">
+      <View className="flex-row w-full">
         <FormCustomCheckBox
           control={control}
+          isChecked={status}
+          defaultValue={status}
+          onPress={isCompleted}
           name="todo"
-          defaultValue={false}
         />
 
-        <Text className="font-bold text-xl text-left pt-3 pb-3">ToDo 1</Text>
+        <Text
+          className={`font-bold text-xl text-left pt-3 pb-3 ${statusCompleted}`}>
+          {todoName}
+        </Text>
       </View>
     </View>
   )
