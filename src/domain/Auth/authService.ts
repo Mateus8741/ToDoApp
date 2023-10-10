@@ -10,7 +10,6 @@ async function signIn(
   try {
     const authCredentials = await authApi.signIn(email, password)
     api.defaults.headers.common.Authorization = `Bearer ${authCredentials.access_token}`
-    console.log('TOKEN =>', authCredentials.access_token)
     return authCredentials
   } catch (error) {
     throw new Error('email ou senha inválido')

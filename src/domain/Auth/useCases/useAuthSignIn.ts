@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
+import { useAuthCredentials } from '../../../services'
 import { authService } from '../authService'
 import { AuthCredentials } from '../authTypes'
 import { MutationOptions } from './useAuthSignUp'
@@ -10,7 +11,7 @@ interface Variables {
 }
 
 export function useAuthSignIn(options?: MutationOptions<AuthCredentials>) {
-  // const { saveCredentials } = useAuthCredentials()
+  const { saveCredentials } = useAuthCredentials()
 
   const mutation = useMutation<AuthCredentials, Error, Variables>({
     mutationFn: ({ email, password }) => authService.signIn(email, password),
@@ -22,7 +23,7 @@ export function useAuthSignIn(options?: MutationOptions<AuthCredentials>) {
     },
     onSuccess: (authCredentials) => {
       // authService.updateToken(authCredentials.token);
-      // saveCredentials(authCredentials)
+      saveCredentials(authCredentials)
     },
   })
 

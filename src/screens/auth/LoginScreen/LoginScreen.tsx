@@ -28,13 +28,6 @@ export function LoginScreen({ navigation }: AuthScreenProps<'LoginScreen'>) {
 
       <View className="pt-12" />
 
-      {/* <FormTextInput
-        control={control}
-        name="name"
-        placeholder="Digite seu nome"
-        label="Nome"
-      /> */}
-
       <FormTextInput
         control={control}
         name="email"
