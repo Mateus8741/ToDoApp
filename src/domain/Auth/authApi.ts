@@ -4,12 +4,10 @@ import { AuthCredentials, SignUpData, User } from './authTypes'
 
 async function signIn(
   email: string,
-  name: string,
   password: string,
 ): Promise<AuthCredentials> {
   const response = await api.post<AuthCredentials>('/login', {
     email,
-    name,
     password,
   })
   return response.data

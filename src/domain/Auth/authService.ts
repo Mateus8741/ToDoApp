@@ -4,17 +4,17 @@ import { authApi } from './authApi'
 import { AuthCredentials, SignUpData } from './authTypes'
 
 async function signIn(
-  name: string,
   email: string,
   password: string,
 ): Promise<AuthCredentials> {
-  const authCredentials = await authApi.signIn(name, email, password)
-  api.defaults.headers.common.Authorization = `Bearer ${authCredentials.token}`
-  return authCredentials
-  // try {
-  // } catch (error) {
-  //   throw new Error('email ou senha inválido')
-  // }
+  try {
+    const authCredentials = await authApi.signIn(email, password)
+    api.defaults.headers.common.Authorization = `Bearer ${authCredentials.access_token}`
+    console.log('TOKEN =>', authCredentials.access_token)
+    return authCredentials
+  } catch (error) {
+    throw new Error('email ou senha inválido')
+  }
 }
 
 async function signOut(): Promise<string> {

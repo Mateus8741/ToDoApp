@@ -5,7 +5,6 @@ import { AuthCredentials } from '../authTypes'
 import { MutationOptions } from './useAuthSignUp'
 
 interface Variables {
-  name: string
   email: string
   password: string
 }
@@ -14,8 +13,7 @@ export function useAuthSignIn(options?: MutationOptions<AuthCredentials>) {
   // const { saveCredentials } = useAuthCredentials()
 
   const mutation = useMutation<AuthCredentials, Error, Variables>({
-    mutationFn: ({ name, email, password }) =>
-      authService.signIn(name, email, password),
+    mutationFn: ({ email, password }) => authService.signIn(email, password),
     retry: false,
     onError: (error) => {
       if (options?.onError) {
