@@ -6,6 +6,7 @@ export interface User {
 }
 
 export interface AuthCredentials {
+  refreshToken: string
   access_token: string
   user: User
 }

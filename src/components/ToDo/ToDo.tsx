@@ -6,18 +6,13 @@ import { FormCustomCheckBox } from '../Form/FormCustomCheckBox'
 interface ToDoProps {
   todoName: string
   status: boolean
+  onPress?: () => void
 }
 
-export function ToDo({ status = false, todoName }: ToDoProps) {
-  const [completed, setCompleted] = React.useState(false)
-
+export function ToDo({ status = false, todoName, onPress }: ToDoProps) {
   const { control } = useForm()
 
-  const statusCompleted = status || completed ? 'line-through' : 'none'
-
-  function isCompleted() {
-    setCompleted(!completed)
-  }
+  const statusCompleted = status ? 'line-through' : 'none'
 
   return (
     <View className="w-ful">
@@ -26,7 +21,7 @@ export function ToDo({ status = false, todoName }: ToDoProps) {
           control={control}
           isChecked={status}
           defaultValue={status}
-          onPress={isCompleted}
+          onPress={onPress}
           name="todo"
         />
 

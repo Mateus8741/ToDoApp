@@ -17,6 +17,7 @@ module.exports = function (api) {
             '@utils': './src/utils',
             '@libs': './src/libs',
             '@api': './src/api',
+            '@infra': './src/infra',
             '@domain': './src/domain',
             '@services': './src/services',
             '@contexts': './src/contexts',

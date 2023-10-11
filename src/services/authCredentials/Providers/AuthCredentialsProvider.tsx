@@ -4,6 +4,7 @@ import React, { createContext, useState } from 'react'
 
 import { AuthCredentials, authService } from '../../../domain'
 
+import { api, registerInterceptor } from '@api'
 import { authCredentialsStorage } from '../authCredentialsStorage'
 import { AuthCredentialsService } from '../authCredentialsTypes'
 
@@ -25,21 +26,22 @@ export function AuthCredentialsProvider({
     startAuthCredentials()
   }, [])
 
-  // React.useEffect(() => {
-  //   const interceptor = registerInterceptor({
-  //     authCredentials,
-  //     removeCredentials,
-  //     saveCredentials,
-  //   })
+  React.useEffect(() => {
+    const interceptor = registerInterceptor({
+      authCredentials,
+      removeCredentials,
+      saveCredentials,
+    })
 
-  //   return interceptor
-  // }, [authCredentials])
+    return interceptor
+  }, [authCredentials])
 
   async function startAuthCredentials() {
     try {
       const ac = await authCredentialsStorage.get()
       if (ac) {
-        // authService.updateToken(ac.token)
+        api.defaults.headers.common.Authorization = `Bearer ${ac.access_token}`
+        authService.updateToken(ac.access_token)
         setAuthCredentials(ac)
       }
     } catch (error) {
@@ -50,7 +52,7 @@ export function AuthCredentialsProvider({
   }
 
   async function saveCredentials(ac: AuthCredentials): Promise<void> {
-    // authService.updateToken(ac.token)
+    authService.updateToken(ac.access_token)
 
     authCredentialsStorage.set(ac)
 

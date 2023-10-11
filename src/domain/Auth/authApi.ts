@@ -22,8 +22,17 @@ async function signUp(data: SignUpData) {
   await api.post<User>('/user', data)
 }
 
+async function refreshToken(token: string): Promise<AuthCredentials> {
+  const response = await api.post<AuthCredentials>('/refresh', {
+    refreshToken: token,
+  })
+
+  return response.data
+}
+
 export const authApi = {
   signIn,
   signOut,
   signUp,
+  refreshToken,
 }

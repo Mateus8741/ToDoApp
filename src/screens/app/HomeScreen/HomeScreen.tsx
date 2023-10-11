@@ -3,51 +3,79 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAppSafeArea } from '@hooks'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { FlatList, Text, View } from 'react-native'
+import { Button, FlatList, ListRenderItemInfo, Text, View } from 'react-native'
+
+import { ToDoDTO } from '@domain'
+
+import {
+  UpdateToDo,
+  useGetTodoList,
+  useToDoCreate,
+  useToDoUpdate,
+} from '@infra'
+import { useAuthCredentials } from '@services'
 import { HomeSchema, homeSchema } from './homeScheema'
 
-const todoList = [
-  {
-    id: 1,
-    todoName: 'Learn React Native',
-    status: true,
-  },
-  {
-    id: 2,
-    todoName: 'Learn React Hook Form',
-    status: false,
-  },
-  {
-    id: 3,
-    todoName: 'Learn Tailwind CSS',
-    status: true,
-  },
-  {
-    id: 4,
-    todoName: 'Learn React Query',
-    status: false,
-  },
-  {
-    id: 5,
-    todoName: 'Learn React Navigation',
-    status: true,
-  },
-]
-
 export function HomeScreen() {
-  const { top, bottom } = useAppSafeArea()
+  const { list, isLoading, refresh } = useGetTodoList()
 
-  const { control, handleSubmit } = useForm<HomeSchema>({
-    resolver: zodResolver(homeSchema),
-
-    defaultValues: {
-      todo: '',
+  const { createToDo } = useToDoCreate({
+    onSuccess: () => {
+      refresh()
     },
   })
 
-  function addToDo(data: HomeSchema) {
-    console.log(data)
+  const { updateToDo } = useToDoUpdate({
+    onSuccess: () => {
+      refresh()
+    },
+  })
+
+  const { authCredentials } = useAuthCredentials()
+
+  const ac = authCredentials?.access_token
+  // console.log(ac)
+
+  const { top, bottom } = useAppSafeArea()
+
+  const { removeCredentials } = useAuthCredentials()
+
+  const { control, handleSubmit, reset } = useForm<HomeSchema>({
+    resolver: zodResolver(homeSchema),
+
+    defaultValues: {
+      title: '',
+    },
+  })
+
+  function renderItem({ item }: ListRenderItemInfo<ToDoDTO>) {
+    return (
+      <ToDo
+        todoName={item.title}
+        status={item.status}
+        onPress={() =>
+          updateToDoStatus({
+            todoID: item.id,
+            status: !item.status,
+          })
+        }
+      />
+    )
   }
+
+  function addToDo({ title }: HomeSchema) {
+    createToDo(title)
+    reset()
+  }
+
+  function updateToDoStatus({ todoID, status }: UpdateToDo) {
+    updateToDo(status, todoID)
+  }
+
+  // useEffect(() => {
+  //   api.defaults.headers.common.Authorization = `Bearer ${ac}`
+  //   console.log(api.defaults.headers.common.Authorization)
+  // }, [ac])
 
   return (
     <View
@@ -57,22 +85,28 @@ export function HomeScreen() {
       }}>
       <Text className="font-bold text-2xl mb-4">USER ToDo List</Text>
 
+      <Button title="sair" onPress={removeCredentials} />
+
       <View className="pb-5">
         <FormTextInput
           control={control}
-          name="todo"
+          name="title"
           placeholder="Adicione seu todo"
         />
 
-        <CustomButton title="Add Todo" onPress={handleSubmit(addToDo)} />
+        <CustomButton
+          title="Add Todo"
+          onPress={handleSubmit(addToDo)}
+          disabled={isLoading}
+        />
       </View>
 
       <FlatList
-        data={todoList}
-        renderItem={({ item }) => (
-          <ToDo todoName={item.todoName} status={item.status} />
-        )}
+        data={list}
+        renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
+        refreshing={isLoading}
+        onRefresh={refresh}
         contentContainerStyle={{
           paddingBottom: bottom,
         }}
